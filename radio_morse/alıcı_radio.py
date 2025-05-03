@@ -8,39 +8,71 @@ sinyal=""
 sinyalmesajı=""
 harf=""
 mesajmetni=""
+morseCode = {
+    ".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E",
+    "..-.": "F", "--.": "G", "....": "H", "..": "I", ".---": "J",
+    "-.-": "K", ".-..": "L", "--": "M", "-.": "N", "---": "O",
+    ".--.": "P", "--.-": "Q", ".-.": "R", "...": "S", "-": "T",
+    "..-": "U", "...-": "V", ".--": "W", "-..-": "X", "-.--": "Y",
+    "--..": "Z",
+    
+    "-----": "0", ".----": "1", "..---": "2", "...--": "3",
+    "....-": "4", ".....": "5", "-....": "6", "--...": "7",
+    "---..": "8", "----.": "9"
+}
+
 while True:
-     if button_a.was_pressed():
-        
-            sinyal="."
+    gelenMesaj=radio.receive()
+    if gelenMesaj is not None:
+        if gelenMesaj=="ok":
+            display.show(Image.YES)
+            music.play(music.BA_DING)
+            sleep(500)
+            display.clear()
+
+            harf=morseCode.get(sinyalmesajı,Image.SAD)
+
+            if harf!=Image.SAD:
+                display.show(harf)
+                sleep(1000)
+                mesajmetni=mesajmetni+harf
+            else:
+                display.show(harf)
+                sleep(1000)
+            display.clear()
+            sinyalsirasi=0
+            sinyalmesajı=""
+            sinyal=""
+        elif gelenMesaj==".":
             display.show(Image("00000:00000:00900:00000:00000"))
             music.play("C:1")
-            radio.send(sinyal)
-            sleep(500)
+            sleep(300)
             display.clear()
-     elif button_a.was_pressed():
-        
-            sinyal="-"
-            display.show("-")
+            sinyal="."
+            sinyalmesajı=sinyalmesajı+sinyal
+        elif gelenMesaj=="-":
+            display.show(Image("-"))
             music.play("C:4")
-            radio.send(sinyal)
-            sleep(500)
+            sleep(300)
             display.clear()
-     elif accelerometer.was_gesture("shake"):
-         radio.send("ok")
-         display.show(Image.YES)
-         music.play(music.BA_DING)
-         sleep(500)
-         display.clear()
-     elif accelerometer.was_gesture("down"):
-         radio.send("bitti")
-         display.show(mektup)
-         music.play(music.JUMP_UP)
-         sleep(1000)
-         for x in range(0,6):
-             display.show(mektup.shift_right(x))
-             sleep(200)
-         sleep(500)
-         display.clear()
-         display.scroll(mesajmetni)
-         mesajmetni=""
-         
+            sinyal="-"
+            sinyalmesajı=sinyalmesajı+sinyal
+        elif gelenMesaj=="bitti":
+            display.show(mektup)
+            music.play(music.JUMP_UP)
+            sleep(1000)
+            for x in range(0,6):
+                display.show(mektup.shift_right(-x))
+                sleep(200)
+            sleep(300)
+            display.scroll(mesajmetni)
+            mesajmetni=""
+            sinyalmesajı=""
+            harf=""
+            sinyal=""
+        
+            
+                
+                
+        
+     
