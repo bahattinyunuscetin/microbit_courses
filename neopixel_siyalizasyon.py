@@ -12,38 +12,24 @@ purple      = (128, 0, 128)
 pink        = (255, 192, 203)
 brown       = (139, 69, 19)
 gray        = (128, 128, 128)
-def yak(renk):
-    for pixel in range(0,len(neopix)):
+black       =(0)
+def sinyal(bas,git,renk):
+    for pixel in range(bas,git):
         neopix[pixel]=renk
     neopix.show()
     return
 while True:
-    yak(red)
-    sleep(1000)
-    
-    yak(green)
-    sleep(1000)
-    
-    yak(blue)
-    sleep(1000)
-    
-    yak(yellow)
-    sleep(1000)
-    
-    yak(cyan)
-    sleep(1000)
-    
-    yak(magenta)
-    sleep(1000)
-    
-    yak(orange)
-    sleep(1000)
-    
-    yak(purple)
-    sleep(1000)
-    
-    yak(pink)
-    sleep(1000)
-    
-    yak(gray)
-    sleep(1000)
+    if accelerometer.get_x()>500:
+        sinyal(0,13,yellow)
+        sleep(500)
+        sinyal(0,13,black)
+        sleep(500)
+    elif accelerometer.get_x()<-500:
+        sinyal(13,24,yellow)
+        sleep(500)
+        sinyal(13,24,black)
+        sleep(500)
+    else:
+        sinyal(0,24,black)
+        
+        
